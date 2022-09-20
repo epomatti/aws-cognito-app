@@ -18,13 +18,12 @@ export default {
           if(response.ok) {
             return response.json()
           } else {
-            console.error(response.status);
-            console.error(response.json());
-          }          
+            return response.text().then(text => { throw new Error(text) })
+          }
         })
         .then(data => this.balance = data.bankBalance)
         .catch((error) => {
-          console.error(error)
+          this.balance = error
         });
     }
   }

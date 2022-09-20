@@ -1,8 +1,8 @@
-import * as worker from './server'
+import * as server from './server'
 
 (async () => {
   try {
-    await worker.start();
+    await server.start();
   } catch (e) {
     console.error(e);
   }

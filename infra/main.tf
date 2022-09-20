@@ -14,9 +14,10 @@ locals {
 }
 
 resource "aws_cognito_user_pool" "default" {
-  name              = "mypool"
-  alias_attributes  = ["email"]
-  mfa_configuration = "OFF"
+  name                     = "mypool"
+  alias_attributes         = ["email"]
+  mfa_configuration        = "OFF"
+  auto_verified_attributes = ["email"]
 
   admin_create_user_config {
     allow_admin_create_user_only = false

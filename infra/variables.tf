@@ -6,3 +6,7 @@ variable "domain" {
   type    = string
   default = "myapp-999"
 }
+
+variable "callback_urls" {
+  type = list(string)
+}

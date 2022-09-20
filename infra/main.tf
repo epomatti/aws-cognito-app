@@ -52,22 +52,23 @@ resource "aws_cognito_user_pool" "main" {
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
-  domain       = "myapp-999"
+  domain       = var.domain
   user_pool_id = aws_cognito_user_pool.main.id
 }
 
-# resource "aws_cognito_user_pool_client" "default" {
-#   name         = "client"
-#   user_pool_id = aws_cognito_user_pool.default.id
+resource "aws_cognito_user_pool_client" "main" {
+  name         = "client-app"
+  user_pool_id = aws_cognito_user_pool.main.id
 
-#   # callback_urls        = [local.host]
-#   # default_redirect_uri = local.host
-#   explicit_auth_flows = ["ADMIN_NO_SRP_AUTH"]
-#   # allowed_oauth_flows_user_pool_client = true
-#   # allowed_oauth_flows          = ["code"]
-#   # allowed_oauth_scopes         = ["email", "openid", "profile"]
-#   # supported_identity_providers = ["COGNITO"]
-# }
+  callback_urls = var.callback_urls
+  allowed_oauth_scopes         = ["email", "openid", "profile"]
+  
+  # default_redirect_uri = local.host
+  # explicit_auth_flows = ["ADMIN_NO_SRP_AUTH"]
+  # allowed_oauth_flows_user_pool_client = true
+  # allowed_oauth_flows          = ["code"]
+  # supported_identity_providers = ["COGNITO"]
+}
 
 
 

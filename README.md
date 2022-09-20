@@ -4,6 +4,10 @@
 touch .auto.tfvars
 ```
 
+```hcl
+
+```
+
 
 Reference:
 

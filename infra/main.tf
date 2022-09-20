@@ -9,9 +9,9 @@ provider "aws" {
 }
 
 
-locals {
-  host = "localhost:5036/signin-oidc"
-}
+# locals {
+#   host = "localhost:5036/signin-oidc"
+# }
 
 resource "aws_cognito_user_pool" "default" {
   name                     = "mypool"
@@ -53,3 +53,16 @@ resource "aws_cognito_user_pool" "default" {
 #   allowed_oauth_scopes         = ["email", "openid", "profile"]
 #   supported_identity_providers = ["COGNITO"]
 # }
+
+
+output "cognito_userpool_custom_domain" {
+  value = aws_cognito_user_pool.default.custom_domain
+}
+
+output "cognito_userpool_domain" {
+  value = aws_cognito_user_pool.default.domain
+}
+
+output "cognito_userpool_endpoint" {
+  value = aws_cognito_user_pool.default.endpoint
+}

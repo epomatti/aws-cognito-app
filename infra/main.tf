@@ -20,6 +20,7 @@ resource "aws_cognito_user_pool" "default" {
   auto_verified_attributes = ["email"]
 
   admin_create_user_config {
+    # Enable self-registration
     allow_admin_create_user_only = false
   }
 
@@ -28,6 +29,10 @@ resource "aws_cognito_user_pool" "default" {
       name     = "verified_email"
       priority = 1
     }
+  }
+
+  email_configuration {
+    email_sending_account = "COGNITO_DEFAULT"
   }
 }
 

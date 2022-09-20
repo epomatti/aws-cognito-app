@@ -1,5 +1,9 @@
 # aws-cognito
 
+```sh
+touch .auto.tfvars
+```
+
 
 Reference:
 

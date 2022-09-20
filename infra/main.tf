@@ -13,9 +13,21 @@ locals {
   host = "localhost:5036/signin-oidc"
 }
 
-resource "aws_cognito_user_pool" "pool" {
-  name             = "mypool"
-  alias_attributes = ["email"]
+resource "aws_cognito_user_pool" "default" {
+  name              = "mypool"
+  alias_attributes  = ["email"]
+  mfa_configuration = "OFF"
+
+  admin_create_user_config {
+    allow_admin_create_user_only = false
+  }
+
+  account_recovery_setting {
+    recovery_mechanism {
+      name     = "verified_email"
+      priority = 1
+    }
+  }
 }
 
 # resource "aws_cognito_user_pool_domain" "main" {

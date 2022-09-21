@@ -12,18 +12,18 @@ export default {
   },
   methods: {
     getData() {
-      this.balance = ""
-      fetch('http://localhost:5000/api/data')
+      this.balance = "";
+      fetch(import.meta.env.VITE_API_URL)
         .then(response => {
           if(response.ok) {
-            return response.json()
+            return response.json();
           } else {
-            return response.text().then(text => { throw new Error(text) })
+            return response.text().then(text => { throw new Error(text) });
           }
         })
         .then(data => this.balance = data.bankBalance)
         .catch((error) => {
-          this.balance = error
+          this.balance = error;
         });
     }
   }

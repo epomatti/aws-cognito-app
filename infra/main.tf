@@ -57,56 +57,22 @@ resource "aws_cognito_user_pool_domain" "main" {
 }
 
 resource "aws_cognito_user_pool_client" "main" {
-  name         = "client-app"
-  user_pool_id = aws_cognito_user_pool.main.id
-
-  callback_urls = var.callback_urls
+  name                                 = "client-app"
+  user_pool_id                         = aws_cognito_user_pool.main.id
+  callback_urls                        = var.callback_urls
+  allowed_oauth_flows_user_pool_client = true
+  # explicit_auth_flows = [
+  #   "ALLOW_REFRESH_TOKEN_AUTH",
+  #   "ALLOW_USER_SRP_AUTH",
+  # ]
+  generate_secret              = true
+  allowed_oauth_flows          = ["code"]
   allowed_oauth_scopes         = ["email", "openid", "profile"]
-  
-  # default_redirect_uri = local.host
-  # explicit_auth_flows = ["ADMIN_NO_SRP_AUTH"]
-  # allowed_oauth_flows_user_pool_client = true
-  # allowed_oauth_flows          = ["code"]
-  # supported_identity_providers = ["COGNITO"]
+  supported_identity_providers = ["COGNITO"]
 }
 
 
-
-
-
-# resource "aws_cognito_user_pool_client" "client" {
-#   name         = "client"
-#   user_pool_id = aws_cognito_user_pool.pool.id
-
-#   callback_urls        = [local.host]
-#   default_redirect_uri = local.host
-#   explicit_auth_flows  = ["ADMIN_NO_SRP_AUTH"]
-#   # allowed_oauth_flows_user_pool_client = true
-#   allowed_oauth_flows          = ["code"]
-#   allowed_oauth_scopes         = ["email", "openid", "profile"]
-#   supported_identity_providers = ["COGNITO"]
-# }
-
-
-# resource "aws_cognito_user_pool_client" "client" {
-#   name = "cognito-client"
-
-#   user_pool_id = aws_cognito_user_pool.user_pool.id
-#   generate_secret = false
-#   refresh_token_validity = 90
-#   prevent_user_existence_errors = "ENABLED"
-#   explicit_auth_flows = [
-#     "ALLOW_REFRESH_TOKEN_AUTH",
-#     "ALLOW_USER_PASSWORD_AUTH",
-#     "ALLOW_ADMIN_USER_PASSWORD_AUTH"
-#   ]
-
-# }
-
-
-
-
-
+### Outputs ###
 
 output "cognito_userpool_custom_domain" {
   value = aws_cognito_user_pool.main.custom_domain

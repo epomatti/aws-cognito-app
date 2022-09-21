@@ -24,6 +24,10 @@ terraform -chdir="infra" init
 terraform -chdir="infra" apply -auto-approve
 ```
 
+Use the output variable `cognito_oidc_issuer_endpoint` as input for the backend setup.
+
+Login to the portal to get the client secret.
+
 ## 2 - Create the backend
 
 The backend will provide the authenticated resources using Cognito as the IdP.

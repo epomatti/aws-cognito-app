@@ -8,9 +8,6 @@ provider "aws" {
   region = var.region
 }
 
-# locals {
-#   host = "localhost:5036/signin-oidc"
-# }
 
 # TODO: Verify attribute changes
 resource "aws_cognito_user_pool" "main" {
@@ -74,14 +71,11 @@ resource "aws_cognito_user_pool_client" "main" {
 
 ### Outputs ###
 
-output "cognito_userpool_custom_domain" {
-  value = aws_cognito_user_pool.main.custom_domain
+output "cognito_oidc_issuer_endpoint" {
+  value       = aws_cognito_user_pool.main.endpoint
+  description = "This is the OIDC Issuer endpoint"
 }
 
-output "cognito_userpool_domain" {
-  value = aws_cognito_user_pool.main.domain
-}
-
-output "cognito_userpool_endpoint" {
-  value = aws_cognito_user_pool.main.endpoint
+output "cognito_client_id" {
+  value = aws_cognito_user_pool_client.main.id
 }

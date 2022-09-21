@@ -24,9 +24,13 @@ terraform -chdir="infra" init
 terraform -chdir="infra" apply -auto-approve
 ```
 
-Use the output variable `cognito_oidc_issuer_endpoint` as input for the backend setup.
+Use the output variables `cognito_client_id` and `cognito_oidc_issuer_endpoint` as input for the backend setup.
 
-Login to the portal to get the client secret.
+To get the client secret:
+
+```sh
+aws cognito-idp describe-user-pool-client --user-pool-id "<region>_xxxxxxxxx" --client-id "00000000000000000000000000"
+```
 
 ## 2 - Create the backend
 

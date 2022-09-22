@@ -82,7 +82,7 @@ yarn dev
 2. Create your account on cognito
 3. You should be redirect to the application after authentication
 4. Try accessing restricted data: http://localhost:5000/profile
-4. Logout should be http://localhost:5000/logout but Cognito doesn't expose it in the issuer API, so build manually the URL like this: `https://<DOMAIN_PREFIX>.auth.<AWS_REGION>.amazoncognito.com/logout?client_id=0000000000000000000&logout_uri=http://localhost:5000"`
+4. Logout should be http://localhost:5000/logout but Cognito doesn't expose it in the issuer API, so build manually the URL like this: `https://<DOMAIN_PREFIX>.auth.<AWS_REGION>.amazoncognito.com/logout?client_id=0000000000000000000&logout_uri=http://localhost:5000/logout`
 
 ---
 ### Clean up

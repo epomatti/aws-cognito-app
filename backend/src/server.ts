@@ -19,8 +19,9 @@ const config: ConfigParams = {
   },
   // Opting to do application logout for this example
   // Probably Issuer is the best option for production
-  idpLogout: true,
-  // This will clear the cookie when exiting the browser
+  // FIXME: Cognito is not publishing end_session_endpoint, would be great to find a solution for this
+  idpLogout: false,
+  // This will clear the cookie when exiting the browser (?)
   session: {
     cookie: {
       transient: true

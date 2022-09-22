@@ -1,6 +1,12 @@
 # AWS Cognito App
 
-## 1 - Create the infrastructure
+## 1 - Create Google
+
+Follow the steps to create a Google social account:
+
+https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-social-idp.html
+
+## 2 - Create the infrastructure
 
 This will ramp-up a Cognito User Pool, domain and client application configured for this project.
 
@@ -13,10 +19,15 @@ touch infra/.auto.tfvars
 Add the variables according to your requirements:
 
 ```hcl
+# Cognito
 domain        = "myapp-123"
 region        = "us-east-2"
 callback_urls = ["http://localhost:5000/", "http://localhost:5000/callback"]
 logout_urls   = ["http://localhost:5000/"]
+
+# Google
+google_client_id     = ""
+google_client_secret = ""
 ```
 
 Deploy the infrastructure:
@@ -34,7 +45,7 @@ To get the client secret:
 aws cognito-idp describe-user-pool-client --user-pool-id "<region>_xxxxxxxxx" --client-id "00000000000000000000000000"
 ```
 
-## 2 - Create the backend
+## 3 - Create the backend
 
 The backend will provide the authenticated resources using Cognito as the IdP.
 
@@ -65,7 +76,7 @@ yarn dev
 ```
 
 
-## 3 - Testing
+## 4 - Testing
 
 1. Access the application login: http://localhost:5000/login
 2. Create your account on cognito
@@ -82,8 +93,11 @@ Once ready, delete the infrastructure:
 terraform -chdir="infra" destroy -auto-approve
 ```
 
+Also delete the Google credentials and authorization.
+
 ## Reference
 
 - [Auth0 Express quickstart](https://auth0.com/docs/quickstart/webapp/express)
 - [OpenID Connect debugger](https://oidcdebugger.com/)
 - [Cognito logout example](https://rieckpil.de/oidc-logout-with-aws-cognito-and-spring-security/)
+- [Add social identity provider](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-social-idp.html)

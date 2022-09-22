@@ -28,6 +28,9 @@ logout_urls   = ["http://localhost:5000", "http://localhost:5000/logout"]
 # Google
 google_client_id     = ""
 google_client_secret = ""
+
+# Elastic Beanstalk
+ec2_instance_types = "t2.micro"
 ```
 
 Deploy the infrastructure:

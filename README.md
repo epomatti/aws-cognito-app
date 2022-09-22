@@ -1,6 +1,6 @@
 # AWS Cognito App
 
-## 1 - Create Google
+## 1 - Create Google social account
 
 Follow the steps to create a Google social account:
 

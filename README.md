@@ -115,6 +115,7 @@ terraform -chdir="elasticbeanstalk" apply -auto-approve
 At this point, configure HTTPS in Elastic Beanstalk.
 
 ➡️ Set the Elastic Beanstalk application URL as `BASE_URL` environment variable in EB that must have HTTPS.
+
 ➡️ Set the Elastic Beanstalk application URL as a callback URL in Cognito that must have HTTPS.
 
 Deploy the code to Elastic Beanstalk.

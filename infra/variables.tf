@@ -15,10 +15,18 @@ variable "logout_urls" {
   type = list(string)
 }
 
+
+# Google
 variable "google_client_id" {
   type = string
 }
 
 variable "google_client_secret" {
+  type = string
+}
+
+
+# Beanstalk
+variable "ec2_instance_types" {
   type = string
 }

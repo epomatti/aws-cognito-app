@@ -11,9 +11,9 @@ app.use(cors())
 const config: ConfigParams = {
   authRequired: true,
   baseURL: process.env.BASE_URL,
-  clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
-  clientSecret: process.env.SECRET,
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
   authorizationParams: {
     response_type: "code"
   },
@@ -39,6 +39,10 @@ export const start = async () => {
 
   app.get('/profile', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
+  });
+
+  app.get('/health', (req, res) => {
+    res.sendStatus(200);
   });
 
   const port = 5000;

@@ -63,9 +63,9 @@ Add the required OIDC variables to the `.env` file (copy from Cognito):
 
 ```sh
 ISSUER_BASE_URL="https://cognito-idp.<region>.amazonaws.com/<user-pool>/"
-CLIENT_ID="00000000000000000000000000"
 BASE_URL="http://localhost:5000"
-SECRET="000000000000000000000000000000000000000000000000000"
+CLIENT_ID="00000000000000000000000000"
+CLIENT_SECRET="000000000000000000000000000000000000000000000000000"
 ```
 
 Start the application server:

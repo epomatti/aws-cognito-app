@@ -6,11 +6,11 @@ Follow the steps to create a Google social account:
 
 https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-social-idp.html
 
-## 2 - Create the infrastructure
+## 2 - Create the Cognito resources
 
 This will ramp-up a Cognito User Pool, domain and client application configured for this project.
 
-Create the infrastructure variables file:
+Create the Cognito variables file:
 
 ```sh
 touch infra/.auto.tfvars
@@ -28,19 +28,16 @@ logout_urls   = ["http://localhost:5000", "http://localhost:5000/logout"]
 # Google
 google_client_id     = ""
 google_client_secret = ""
-
-# Elastic Beanstalk
-ec2_instance_types = "t2.micro"
 ```
 
 Deploy the infrastructure:
 
 ```sh
-terraform -chdir="infra" init
-terraform -chdir="infra" apply -auto-approve
+terraform -chdir="cognito" init
+terraform -chdir="cognito" apply -auto-approve
 ```
 
-Use the output variables `cognito_client_id` and `cognito_oidc_issuer_endpoint` as input for the backend setup.
+Use the output variables `cognito_client_id` and `cognito_oidc_issuer_endpoint_url` as input for the backend setup.
 
 To get the client secret:
 

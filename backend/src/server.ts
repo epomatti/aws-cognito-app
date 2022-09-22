@@ -14,6 +14,7 @@ const config: ConfigParams = {
   issuerBaseURL: process.env.ISSUER_BASE_URL,
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
+  secret: process.env.SECRET,
   authorizationParams: {
     response_type: "code"
   },

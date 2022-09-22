@@ -66,6 +66,7 @@ ISSUER_BASE_URL="https://cognito-idp.<region>.amazonaws.com/<user-pool>/"
 BASE_URL="http://localhost:5000"
 CLIENT_ID="00000000000000000000000000"
 CLIENT_SECRET="000000000000000000000000000000000000000000000000000"
+SECRET="abcdef0123456789"
 ```
 
 Start the application server:
@@ -75,8 +76,7 @@ yarn install
 yarn dev
 ```
 
-
-## 4 - Testing
+## 4 - Local Testing
 
 1. Access the application login: http://localhost:5000/login
 2. Create your account on cognito
@@ -84,13 +84,43 @@ yarn dev
 4. Try accessing restricted data: http://localhost:5000/profile
 4. Logout should be http://localhost:5000/logout but Cognito doesn't expose it in the issuer API, so build manually the URL like this: `https://<DOMAIN_PREFIX>.auth.<AWS_REGION>.amazoncognito.com/logout?client_id=0000000000000000000&logout_uri=http://localhost:5000/logout`
 
+## 5 - Elastic Beanstalk
+
+Creates an Elastic Beanstalk environment.
+
+```sh
+touch elasticbeanstalk/.auto.tfvars
+```
+
+Add the variables according to your requirements:
+
+```hcl
+region             = "us-east-2"
+ec2_instance_types = "t2.micro"
+client_id          = "00000000000000000000000000"
+client_secret      = "0000000000000000000000000000000000000000000000000000"
+secret             = "abcdef0123456789"
+issuer_base_url    = "https://cognito-idp.<region>.amazonaws.com/<user-pool-id>"
+```
+
+Deploy the infrastructure:
+
+```sh
+terraform -chdir="elasticbeanstalk" init
+terraform -chdir="elasticbeanstalk" apply -auto-approve
+```
+
+➡️ Set the Elastic Beanstalk application URL as `BASE_URL` environment variable in EB.
+➡️ Set the Elastic Beanstalk application URL as a callback URL in Cognito.
+
 ---
 ### Clean up
 
 Once ready, delete the infrastructure:
 
 ```sh
-terraform -chdir="infra" destroy -auto-approve
+terraform -chdir="cognito" destroy -auto-approve
+terraform -chdir="elasticbeanstalk" destroy -auto-approve
 ```
 
 Also delete the Google credentials and authorization.

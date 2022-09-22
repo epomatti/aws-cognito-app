@@ -16,6 +16,15 @@ const config: ConfigParams = {
   clientSecret: process.env.SECRET,
   authorizationParams: {
     response_type: "code"
+  },
+  // Opting to do application logout for this example
+  // Probably Issuer is the best option for production
+  idpLogout: true,
+  // This will clear the cookie when exiting the browser
+  session: {
+    cookie: {
+      transient: true
+    }
   }
 };
 

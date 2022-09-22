@@ -13,8 +13,10 @@ touch infra/.auto.tfvars
 Add the variables according to your requirements:
 
 ```hcl
+domain        = "myapp-123"
 region        = "us-east-2"
-callback_urls = ["http://localhost:5000/"]
+callback_urls = ["http://localhost:5000/", "http://localhost:5000/callback"]
+logout_urls   = ["http://localhost:5000/"]
 ```
 
 Deploy the infrastructure:
@@ -36,10 +38,14 @@ aws cognito-idp describe-user-pool-client --user-pool-id "<region>_xxxxxxxxx" --
 
 The backend will provide the authenticated resources using Cognito as the IdP.
 
+```sh
+cd backend
+```
+
 Create the `.env` file:
 
 ```sh
-touch backend/.env
+touch .env
 ```
 
 Add the required OIDC variables to the `.env` file (copy from Cognito):
@@ -54,8 +60,8 @@ SECRET="000000000000000000000000000000000000000000000000000"
 Start the application server:
 
 ```sh
-yarn --cwd "./backend" install
-yarn --cwd "./backend" dev
+yarn install
+yarn dev
 ```
 
 
@@ -65,7 +71,7 @@ yarn --cwd "./backend" dev
 2. Create your account on cognito
 3. You should be redirect to the application after authentication
 4. Try accessing restricted data: http://localhost:5000/profile
-4. Logout: http://localhost:5000/logout
+4. Logout should be http://localhost:5000/logout but Cognito doesn't expose it in the issuer API, so build manually the URL like this: `https://<DOMAIN_PREFIX>.auth.<AWS_REGION>.amazoncognito.com/logout?client_id=0000000000000000000&logout_uri=http://localhost:5000"`
 
 ---
 ### Clean up
@@ -80,3 +86,4 @@ terraform -chdir="infra" destroy -auto-approve
 
 - [Auth0 Express quickstart](https://auth0.com/docs/quickstart/webapp/express)
 - [OpenID Connect debugger](https://oidcdebugger.com/)
+- [Cognito logout example](https://rieckpil.de/oidc-logout-with-aws-cognito-and-spring-security/)

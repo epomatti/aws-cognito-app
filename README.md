@@ -86,7 +86,7 @@ yarn dev
 
 ## 5 - Elastic Beanstalk
 
-Creates an Elastic Beanstalk environment.
+Optionally, deploy to an EB environment.
 
 ℹ️ You'll need to activate HTTPS in order for Cognito to accept the callback URLs.
 

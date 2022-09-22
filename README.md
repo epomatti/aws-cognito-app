@@ -88,6 +88,8 @@ yarn dev
 
 Creates an Elastic Beanstalk environment.
 
+ℹ️ You'll need to activate HTTPS in order for Cognito to accept the callback URLs.
+
 ```sh
 touch elasticbeanstalk/.auto.tfvars
 ```
@@ -110,8 +112,12 @@ terraform -chdir="elasticbeanstalk" init
 terraform -chdir="elasticbeanstalk" apply -auto-approve
 ```
 
-➡️ Set the Elastic Beanstalk application URL as `BASE_URL` environment variable in EB.
-➡️ Set the Elastic Beanstalk application URL as a callback URL in Cognito.
+At this point, configure HTTPS in Elastic Beanstalk.
+
+➡️ Set the Elastic Beanstalk application URL as `BASE_URL` environment variable in EB that must have HTTPS.
+➡️ Set the Elastic Beanstalk application URL as a callback URL in Cognito that must have HTTPS.
+
+Deploy the code to Elastic Beanstalk.
 
 ---
 ### Clean up

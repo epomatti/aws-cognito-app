@@ -176,3 +176,9 @@ resource "aws_elastic_beanstalk_environment" "main" {
     value     = "true"
   }
 }
+
+### Output ###
+
+output "app_url" {
+  value = "http://${aws_elastic_beanstalk_environment.main.cname}"
+}

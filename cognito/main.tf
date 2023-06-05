@@ -40,7 +40,7 @@ resource "aws_cognito_user_pool" "main" {
     email_sending_account = "COGNITO_DEFAULT"
   }
 
-  # This will add email as a required attribute
+  # # This will add email as a required attribute
   # schema {
   #   attribute_data_type      = "String"
   #   developer_only_attribute = false
@@ -64,6 +64,14 @@ resource "aws_cognito_identity_provider" "google" {
     authorize_scopes = "email"
     client_id        = var.google_client_id
     client_secret    = var.google_client_secret
+
+    # TODO: Dynamic options. Read AWS docs for more info
+    "attributes_url"                = "https://people.googleapis.com/v1/people/me?personFields="
+    "attributes_url_add_attributes" = "true"
+    "authorize_url"                 = "https://accounts.google.com/o/oauth2/v2/auth"
+    "oidc_issuer"                   = "https://accounts.google.com"
+    "token_request_method"          = "POST"
+    "token_url"                     = "https://www.googleapis.com/oauth2/v4/token"
   }
 
   attribute_mapping = {
@@ -72,10 +80,12 @@ resource "aws_cognito_identity_provider" "google" {
   }
 }
 
-# resource "aws_cognito_user_pool_domain" "main" {
-#   domain       = var.domain
-#   user_pool_id = aws_cognito_user_pool.main.id
-# }
+# TODO: Create custom domain
+# This will create the Hosted UI experience
+resource "aws_cognito_user_pool_domain" "main" {
+  domain       = var.domain
+  user_pool_id = aws_cognito_user_pool.main.id
+}
 
 # resource "aws_cognito_user_pool_client" "main" {
 #   name                                 = "client-app"

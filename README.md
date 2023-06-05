@@ -20,8 +20,6 @@ Add the variables according to your requirements:
 
 ```hcl
 # Cognito
-domain        = "myapp-123"
-region        = "us-east-2"
 callback_urls = ["http://localhost:5000/", "http://localhost:5000/callback"]
 logout_urls   = ["http://localhost:5000", "http://localhost:5000/logout"]
 

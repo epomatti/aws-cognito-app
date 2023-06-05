@@ -1,109 +1,101 @@
 terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.1.0"
+    }
+  }
   backend "local" {
     path = ".workspace/terraform.tfstate"
   }
 }
 
 provider "aws" {
-  region = var.region
+  region = var.aws_region
 }
-
 
 # TODO: Verify attribute changes
 resource "aws_cognito_user_pool" "main" {
   name = "mypool"
-  // alias_attributes         = ["email"]
-  username_attributes      = ["email"]
-  mfa_configuration        = "OFF"
+  # Does not allow alias. Only one method for SSO
+  username_attributes = ["email"]
+  # mfa_configuration        = var.mfa
   auto_verified_attributes = ["email"]
 
   admin_create_user_config {
-    # Enable self-registration
-    allow_admin_create_user_only = false
+    # This will disable self-registration
+    allow_admin_create_user_only = true
   }
 
+  # Will use SSO, no need for self-recovery
   account_recovery_setting {
     recovery_mechanism {
-      name     = "verified_email"
+      name     = "admin_only"
       priority = 1
     }
   }
 
+  # TODO: Change to corporate SES
   email_configuration {
     email_sending_account = "COGNITO_DEFAULT"
   }
 
   # This will add email as a required attribute
-  schema {
-    attribute_data_type      = "String"
-    developer_only_attribute = false
-    mutable                  = true
-    name                     = "email"
-    required                 = true
+  # schema {
+  #   attribute_data_type      = "String"
+  #   developer_only_attribute = false
+  #   mutable                  = true
+  #   name                     = "email"
+  #   required                 = true
 
-    string_attribute_constraints {
-      min_length = 1
-      max_length = 256
-    }
-  }
+  #   string_attribute_constraints {
+  #     min_length = 1
+  #     max_length = 256
+  #   }
+  # }
 }
 
-resource "aws_cognito_identity_provider" "google" {
-  user_pool_id  = aws_cognito_user_pool.main.id
-  provider_name = "Google"
-  provider_type = "Google"
+# resource "aws_cognito_identity_provider" "google" {
+#   user_pool_id  = aws_cognito_user_pool.main.id
+#   provider_name = "Google"
+#   provider_type = "Google"
 
-  provider_details = {
-    authorize_scopes = "email"
-    client_id        = var.google_client_id
-    client_secret    = var.google_client_secret
-  }
+#   provider_details = {
+#     authorize_scopes = "email"
+#     client_id        = var.google_client_id
+#     client_secret    = var.google_client_secret
+#   }
 
-  attribute_mapping = {
-    email    = "email"
-    username = "sub"
-  }
-}
+#   attribute_mapping = {
+#     email    = "email"
+#     username = "sub"
+#   }
+# }
 
-resource "aws_cognito_user_pool_domain" "main" {
-  domain       = var.domain
-  user_pool_id = aws_cognito_user_pool.main.id
-}
+# resource "aws_cognito_user_pool_domain" "main" {
+#   domain       = var.domain
+#   user_pool_id = aws_cognito_user_pool.main.id
+# }
 
-resource "aws_cognito_user_pool_client" "main" {
-  name                                 = "client-app"
-  user_pool_id                         = aws_cognito_user_pool.main.id
-  callback_urls                        = var.callback_urls
-  logout_urls                          = var.logout_urls
-  allowed_oauth_flows_user_pool_client = true
-  # explicit_auth_flows = [
-  #   "ALLOW_REFRESH_TOKEN_AUTH",
-  #   "ALLOW_USER_SRP_AUTH",
-  # ]
-  generate_secret              = true
-  allowed_oauth_flows          = ["code"]
-  allowed_oauth_scopes         = ["email", "openid", "profile"]
-  supported_identity_providers = ["COGNITO", aws_cognito_identity_provider.google.provider_name]
+# resource "aws_cognito_user_pool_client" "main" {
+#   name                                 = "client-app"
+#   user_pool_id                         = aws_cognito_user_pool.main.id
+#   callback_urls                        = var.callback_urls
+#   logout_urls                          = var.logout_urls
+#   allowed_oauth_flows_user_pool_client = true
+#   # explicit_auth_flows = [
+#   #   "ALLOW_REFRESH_TOKEN_AUTH",
+#   #   "ALLOW_USER_SRP_AUTH",
+#   # ]
+#   generate_secret              = true
+#   allowed_oauth_flows          = ["code"]
+#   allowed_oauth_scopes         = ["email", "openid", "profile"]
+#   supported_identity_providers = ["COGNITO", aws_cognito_identity_provider.google.provider_name]
 
-  # To make it easy during development
-  lifecycle {
-    ignore_changes = [
-      callback_urls, logout_urls
-    ]
-  }
-}
-
-### Outputs ###
-
-output "cognito_oidc_issuer_endpoint_url" {
-  value       = "https://${aws_cognito_user_pool.main.endpoint}"
-  description = "This is the OIDC Issuer endpoint URL"
-}
-
-output "cognito_client_id" {
-  value = aws_cognito_user_pool_client.main.id
-}
-
-output "cognito_get_client_secret_command" {
-  value = "aws cognito-idp describe-user-pool-client --user-pool-id ${aws_cognito_user_pool.main.id} --client-id ${aws_cognito_user_pool_client.main.id}"
-}
+#   # To make it easy during development
+#   lifecycle {
+#     ignore_changes = [
+#       callback_urls, logout_urls
+#     ]
+#   }
+# }

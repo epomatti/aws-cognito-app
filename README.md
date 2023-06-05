@@ -10,11 +10,8 @@ cp infra/templates/dev.auto.tfvars infra/.auto.tfvars
 
 terraform -chdir="infra" init
 terraform -chdir="infra" apply -auto-approve
-```
 
-To get the client secret:
-
-```sh
+# Get the app client credentials
 aws cognito-idp describe-user-pool-client --user-pool-id "<region>_xxxxxxxxx" --client-id "00000000000000000000000000"
 ```
 
@@ -45,7 +42,7 @@ SECRET="abcdef0123456789"
 Start the application server:
 
 ```sh
-bash ./api/mvnw spring-boot:run
+bash mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 ## 4 - Local Testing

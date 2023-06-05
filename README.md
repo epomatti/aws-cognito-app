@@ -1,41 +1,16 @@
 # AWS Cognito App
 
-## 1 - Create Google social account
+You must first create the Google project credentials. Follow [these steps](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-social-idp.html) for doing so.
 
-Follow the steps to create a Google social account:
-
-https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-social-idp.html
-
-## 2 - Create the Cognito resources
-
-This will ramp-up a Cognito User Pool, domain and client application configured for this project.
-
-Create the Cognito variables file:
+After that, create the infrastructure:
 
 ```sh
-touch infra/.auto.tfvars
+# Add the Google attributes in this file
+cp infra/templates/dev.auto.tfvars infra/.auto.tfvars
+
+terraform -chdir="infra" init
+terraform -chdir="infra" apply -auto-approve
 ```
-
-Add the variables according to your requirements:
-
-```hcl
-# Cognito
-callback_urls = ["http://localhost:5000/", "http://localhost:5000/callback"]
-logout_urls   = ["http://localhost:5000", "http://localhost:5000/logout"]
-
-# Google
-google_client_id     = ""
-google_client_secret = ""
-```
-
-Deploy the infrastructure:
-
-```sh
-terraform -chdir="cognito" init
-terraform -chdir="cognito" apply -auto-approve
-```
-
-Use the output variables `cognito_client_id` and `cognito_oidc_issuer_endpoint_url` as input for the backend setup.
 
 To get the client secret:
 
@@ -43,9 +18,9 @@ To get the client secret:
 aws cognito-idp describe-user-pool-client --user-pool-id "<region>_xxxxxxxxx" --client-id "00000000000000000000000000"
 ```
 
-## 3 - Create the backend
+## 3 - API
 
-The backend will provide the authenticated resources using Cognito as the IdP.
+Backend to test the authentication.
 
 ```sh
 cd backend
@@ -61,7 +36,7 @@ Add the required OIDC variables to the `.env` file (copy from Cognito):
 
 ```sh
 ISSUER_BASE_URL="https://cognito-idp.<region>.amazonaws.com/<user-pool>/"
-BASE_URL="http://localhost:5000"
+BASE_URL="http://localhost:8080"
 CLIENT_ID="00000000000000000000000000"
 CLIENT_SECRET="000000000000000000000000000000000000000000000000000"
 SECRET="abcdef0123456789"
@@ -70,8 +45,7 @@ SECRET="abcdef0123456789"
 Start the application server:
 
 ```sh
-yarn install
-yarn dev
+bash ./api/mvnw spring-boot:run
 ```
 
 ## 4 - Local Testing

@@ -93,14 +93,14 @@ resource "aws_cognito_user_pool_client" "main" {
   callback_urls                        = var.callback_urls
   logout_urls                          = var.logout_urls
   allowed_oauth_flows_user_pool_client = true
-  # explicit_auth_flows = [
-  #   "ALLOW_REFRESH_TOKEN_AUTH",
-  #   "ALLOW_USER_SRP_AUTH",
-  # ]
+  explicit_auth_flows = [
+    "ALLOW_REFRESH_TOKEN_AUTH",
+    "ALLOW_USER_SRP_AUTH",
+  ]
   generate_secret              = true
   allowed_oauth_flows          = ["code"]
   allowed_oauth_scopes         = ["email", "openid", "profile"]
-  supported_identity_providers = ["COGNITO", aws_cognito_identity_provider.google.provider_name]
+  supported_identity_providers = [aws_cognito_identity_provider.google.provider_name]
 
   # To make it easy during development
   lifecycle {

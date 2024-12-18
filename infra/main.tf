@@ -11,11 +11,9 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "cognito" {
-  source               = "./modules/cognito"
-  google_client_id     = var.google_client_id
-  google_client_secret = var.google_client_secret
-  domain               = var.domain
-  callback_urls        = var.callback_urls
-  logout_urls          = var.logout_urls
+module "cognito_user_pool" {
+  source                       = "./modules/cognito/user-pool"
+  app_name                     = var.app_name
+  mfa_configuration            = var.mfa_configuration
+  allow_admin_create_user_only = var.allow_admin_create_user_only
 }

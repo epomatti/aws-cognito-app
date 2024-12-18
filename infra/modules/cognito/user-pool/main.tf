@@ -2,11 +2,11 @@
 resource "aws_cognito_user_pool" "main" {
   name = "${var.app_name}-pool"
 
-  # Does not allow alias. Only one method for SSO
-  username_attributes = ["email"]
+  # This will not allow an alias
+  username_attributes      = var.username_attributes
+  auto_verified_attributes = var.auto_verified_attributes
 
-  mfa_configuration        = var.mfa_configuration
-  auto_verified_attributes = ["email"]
+  mfa_configuration = var.mfa_configuration
 
   admin_create_user_config {
     # Disables self-registration

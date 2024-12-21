@@ -26,7 +26,34 @@ variable "allow_admin_create_user_only" {
   type = bool
 }
 
+# User Pool: Password policy
+variable "minimum_length" {
+  type = number
+}
 
+variable "require_lowercase" {
+  type = bool
+}
+
+variable "require_numbers" {
+  type = bool
+}
+
+variable "require_symbols" {
+  type = bool
+}
+
+variable "require_uppercase" {
+  type = bool
+}
+
+variable "temporary_password_validity_days" {
+  type = number
+}
+
+variable "password_history_size" {
+  type = number
+}
 
 
 

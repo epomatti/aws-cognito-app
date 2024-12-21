@@ -1,3 +1,7 @@
+output "user_pool_id" {
+  value = module.cognito_user_pool.user_pool_id
+}
+
 # output "cognito_oidc_issuer_endpoint_url" {
 #   value       = "https://${aws_cognito_user_pool.main.endpoint}"
 #   description = "This is the OIDC Issuer endpoint URL"

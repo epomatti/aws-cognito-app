@@ -13,7 +13,14 @@ resource "aws_cognito_user_pool" "main" {
   username_attributes      = var.username_attributes
   auto_verified_attributes = var.auto_verified_attributes
 
-  mfa_configuration = var.mfa_configuration
+  mfa_configuration          = var.mfa_configuration
+  sms_authentication_message = var.sms_authentication_message
+
+  sms_configuration {
+    external_id    = var.sms_external_id
+    sns_caller_arn = var.sms_role_arn
+    sns_region     = var.sms_region
+  }
 
   admin_create_user_config {
     # Disables self-registration

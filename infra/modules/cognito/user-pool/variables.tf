@@ -18,6 +18,23 @@ variable "allow_admin_create_user_only" {
   type = bool
 }
 
+# SMS
+variable "sms_role_arn" {
+  type = string
+}
+
+variable "sms_authentication_message" {
+  type = string
+}
+
+variable "sms_external_id" {
+  type = string
+}
+
+variable "sms_region" {
+  type = string
+}
+
 # Password policy
 variable "minimum_length" {
   type = number

@@ -26,6 +26,11 @@ variable "allow_admin_create_user_only" {
   type = bool
 }
 
+# SMS
+variable "sms_authentication_message" {
+  type = string
+}
+
 # User Pool: Password policy
 variable "minimum_length" {
   type = number
@@ -54,8 +59,6 @@ variable "temporary_password_validity_days" {
 variable "password_history_size" {
   type = number
 }
-
-
 
 variable "domain" {
   type    = string

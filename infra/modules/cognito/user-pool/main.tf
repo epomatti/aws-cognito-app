@@ -37,7 +37,10 @@ resource "aws_cognito_user_pool" "main" {
 
   # TODO: Change to corporate SES
   email_configuration {
-    email_sending_account = "COGNITO_DEFAULT"
+    email_sending_account  = "DEVELOPER"
+    from_email_address     = var.from_email_address
+    reply_to_email_address = var.from_email_address
+    source_arn             = var.ses_email_identity_arn
   }
 
   password_policy {

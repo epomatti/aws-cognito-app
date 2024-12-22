@@ -1,6 +1,9 @@
 # Project
 app_name = "wealthtech"
 
+### SES ###
+ses_email_identity = ""
+
 ### Cognito ###
 
 # User Pool
@@ -8,6 +11,9 @@ mfa_configuration            = "OFF"                     # ON, OFF, OPTIONAL
 username_attributes          = ["email", "phone_number"] # "email", "phone_number"
 auto_verified_attributes     = ["email"]                 # "email", "phone_number"
 allow_admin_create_user_only = true
+
+# SMS
+sms_authentication_message = "Your authentication code is {####}"
 
 # User Pool: Password policy
 minimum_length                   = 8

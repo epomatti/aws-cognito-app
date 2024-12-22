@@ -18,6 +18,15 @@ variable "allow_admin_create_user_only" {
   type = bool
 }
 
+# Email
+variable "ses_email_identity_arn" {
+  type = string
+}
+
+variable "from_email_address" {
+  type = string
+}
+
 # SMS
 variable "sms_role_arn" {
   type = string

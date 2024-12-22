@@ -3,6 +3,11 @@ variable "aws_region" {
   default = "us-east-2"
 }
 
+### SES ###
+variable "ses_email_identity" {
+  type = string
+}
+
 ### Cognito ###
 
 # User Pool
@@ -24,6 +29,11 @@ variable "mfa_configuration" {
 
 variable "allow_admin_create_user_only" {
   type = bool
+}
+
+# Email
+variable "cognito_from_email_address" {
+  type = string
 }
 
 # SMS

@@ -2,13 +2,13 @@ variable "app_name" {
   type = string
 }
 
-variable "username_attributes" {
-  type = list(string)
-}
+# variable "username_attributes" {
+#   type = list(string)
+# }
 
-variable "auto_verified_attributes" {
-  type = list(string)
-}
+# variable "auto_verified_attributes" {
+#   type = list(string)
+# }
 
 variable "mfa_configuration" {
   type = string
@@ -19,13 +19,13 @@ variable "allow_admin_create_user_only" {
 }
 
 # Email
-variable "ses_email_identity_arn" {
-  type = string
-}
+# variable "ses_email_identity_arn" {
+#   type = string
+# }
 
-variable "from_email_address" {
-  type = string
-}
+# variable "from_email_address" {
+#   type = string
+# }
 
 # SMS
 variable "sms_role_arn" {

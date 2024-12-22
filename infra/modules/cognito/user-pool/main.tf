@@ -10,8 +10,11 @@ resource "aws_cognito_user_pool" "main" {
   name = "${var.app_name}-${random_string.affix.result}"
 
   # This will not allow an alias
-  username_attributes      = var.username_attributes
-  auto_verified_attributes = var.auto_verified_attributes
+  # username_attributes      = var.username_attributes
+  # auto_verified_attributes = var.auto_verified_attributes
+
+  # username_attributes = [""]
+  alias_attributes = [""]
 
   mfa_configuration          = var.mfa_configuration
   sms_authentication_message = var.sms_authentication_message
@@ -36,12 +39,12 @@ resource "aws_cognito_user_pool" "main" {
   }
 
   # TODO: Change to corporate SES
-  email_configuration {
-    email_sending_account  = "DEVELOPER"
-    from_email_address     = var.from_email_address
-    reply_to_email_address = var.from_email_address
-    source_arn             = var.ses_email_identity_arn
-  }
+  # email_configuration {
+  #   email_sending_account  = "DEVELOPER"
+  #   from_email_address     = var.from_email_address
+  #   reply_to_email_address = var.from_email_address
+  #   source_arn             = var.ses_email_identity_arn
+  # }
 
   password_policy {
     minimum_length                   = var.minimum_length

@@ -12,6 +12,9 @@ username_attributes          = ["email", "phone_number"] # "email", "phone_numbe
 auto_verified_attributes     = ["email"]                 # "email", "phone_number"
 allow_admin_create_user_only = true
 
+# Email
+cognito_from_email_address = "test@example.com"
+
 # SMS
 sms_authentication_message = "Your authentication code is {####}"
 

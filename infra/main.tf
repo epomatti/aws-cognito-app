@@ -15,22 +15,22 @@ module "iam" {
   source = "./modules/iam"
 }
 
-module "ses" {
-  source         = "./modules/ses"
-  email_identity = var.ses_email_identity
-}
+# module "ses" {
+#   source         = "./modules/ses"
+#   email_identity = var.ses_email_identity
+# }
 
 module "cognito_user_pool" {
   source                       = "./modules/cognito/user-pool"
   app_name                     = var.app_name
-  username_attributes          = var.username_attributes
-  auto_verified_attributes     = var.auto_verified_attributes
+  # username_attributes          = var.username_attributes
+  # auto_verified_attributes     = var.auto_verified_attributes
   mfa_configuration            = var.mfa_configuration
   allow_admin_create_user_only = var.allow_admin_create_user_only
 
   # Email
-  ses_email_identity_arn = module.ses.email_identity_arn
-  from_email_address     = var.cognito_from_email_address
+  # ses_email_identity_arn = module.ses.email_identity_arn
+  # from_email_address     = var.cognito_from_email_address
 
   # SMS
   sms_role_arn               = module.iam.cognito_sms_role_arn
